@@ -1,6 +1,7 @@
 var mqtt = require("mqtt");
 var client = mqtt.connect("mqtt://test.mosquitto.org");
 
+//publishing data to the mosquitto cloud
 client.on("connect", function () {
   client.subscribe("sensorTopic", function (err) {
     const data = {

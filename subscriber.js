@@ -12,6 +12,8 @@ function generateUuid() {
 
 var channel = null;
 var conn = null;
+
+//connecting to the rabbitmq
 amqp.connect("amqp://localhost", function (error0, connection) {
   if (error0) {
     throw error0;
@@ -25,10 +27,12 @@ amqp.connect("amqp://localhost", function (error0, connection) {
   });
 });
 
+//subscribing to the sensorTopic on mosquitto
 client.on("connect", function (err) {
   client.subscribe("sensorTopic");
 });
 
+//sending sensor data to rabbitmq
 client.on("message", function (topic, message) {
   var queue = "device_queue";
   var correlationId = generateUuid();
